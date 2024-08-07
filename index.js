@@ -14,11 +14,11 @@ app.get('/', (req, res)=>{
 })
 
 
-app.get('/genarate-pdf', async (req, res) => {
+app.post('/genarate-pdf', async (req, res) => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
   const url = req.body.url;
-  
+
   const filename = Date.now();
   const filePath = path.join(__dirname, 'invoice', `${filename}.pdf`);
 
