@@ -9,16 +9,13 @@ app.use(express.json());
 
 app.use('/invoice', express.static(path.join(__dirname, 'invoice')));
 
-app.get('/', (req, res)=>{
-    res.send('new Server is running')
-})
 
 
-app.post('/genarate-pdf', async (req, res) => {
+
+app.get('/', async (req, res) => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  const url = req.body.url;
-
+  const url = 'https://rafusoft.com/web-development-service-lead-outsourcing';
   const filename = Date.now();
   const filePath = path.join(__dirname, 'invoice', `${filename}.pdf`);
 
@@ -31,9 +28,9 @@ app.post('/genarate-pdf', async (req, res) => {
   await page.pdf({ path: filePath, format: 'A4', printBackground: true });
   await browser.close();
 
-  res.send(`success url: http://localhost:${port}/invoice/${filename}.pdf`);
+  res.send(`url: /invoice/${filename}.pdf`);
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running`);
 });
